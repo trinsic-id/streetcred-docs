@@ -1,0 +1,94 @@
+---
+id: connections
+title: Connections
+sidebar_label: Connections
+---
+
+
+Connections represent a peer-to-peer relationship using a pairwise key exchange. When two parties establish a connection, they can exchange various data messages securely.
+
+Connections are a set unique pairwise keys that are only used for communication between the parties involved in the connection relationship. Connections are negotiated with an exchange of messages and start with an invitation message.
+
+In our API, each connection is represened with a `connectionId` and this identifier is used to reference this connection throughout the different endpoints.
+
+> The process of establishing connections is described in [Aries RFC 0023: DID Exchange Protocol 1.0](https://github.com/hyperledger/aries-rfcs/tree/master/features/0023-did-exchange)
+
+## Creating new connection (invitation)
+
+To create a new invitation, call the `POST /connections` endpoint or use the service clients for your platform.
+
+### Parameters
+
+You can specify the following optional parameters.
+
+- `connectionId` _[string optional]_ - Unique connection identifier. If not specified, a random one will be generated. You can use this field to associate user identifiers with identifers in your internal systems. This can be an email, login, or other unique id.
+- `multiParty` _[bool optional]_ - If set to `true`, the invitation can be used by multiple parties and will always have the status set to `Invited`.
+When a party accepts this invitation, a new connection record with a unique identifier will be created. Default value is `false`.
+
+
+### Response
+
+Creating a connection responds with the same response body as the [GET /Connections/{credentialId} endpoint](https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Connections/GetConnection)
+
+(Shown below)
+
+### API Reference
+
+Try creating a connection at the - 
+
+
+## Retrieving connections data
+
+To get the details of a connection (including invitation details), call the `GET /connections/{connectionId}` endpoint, by passing the connection identifier you obtained as result when creating new connection.
+
+
+### Response
+
+The response of this operation is an object of type `ConnectionContract`. This object contains the following fields
+
+| Field | Type | Description |
+|-|-|-|
+|`connectionId` | _string_ | Unique connection identifier. Can be passed when creating new connection. If not, a randon one is assigned.|
+| `state` | _string_ | The state of the current connections. The value can be `Invited`, `Negotiating`, `Connected`. In order to successfully exchange messages and credentials with a certain connection, it must be in the `Connected` state. This state will be set automatically when both parties successfully exchange their DIDs.|
+| `invitation` | _string_ | Represents the encoded invitation JSON as Base64 string. You can use this data to encode it into a URL or a QR code. See details below.|
+| `invitationUrl` | _string_ | This is simply a convenience URL that we encoded and shortened. When called, it will resolve (and redirect) to a long form URL that contains the full invitation message. This URL can be presented as QR code as is. Our mobile agent app is able to scan and decode QR codes encoded with this URL. |
+
+### API Reference
+
+
+`GET /connections/{connectionId}`
+
+## Sending invitations to users
+
+There are few ways to send connection invitation to users. They can be sent as a URL link, encoded as QR code, or just JSON. Each approach depends on what the invitee's agent is capable of. When the invitee is using a mobile agent, the most common approach is either a QR code or deep link URL.
+
+### Encoding invitations as QR code
+
+To encode the invitation as QR code, a certain direction has been accepted by the community. This approach, however, is not strictly standardized. It will work with the Streetcred mobile app. <br />
+QR codes should decode into a URL of the format below
+
+`[url_scheme]://[host]?c_i=[invitation_data]`
+
+Example:
+
+`https://example.com/?c_i=...`
+
+A quick and simple way to get a QR code is by using Google Chart API. Simply pass your URL to the Google endpoint
+
+`https://chart.googleapis.com/chart?cht=qr&chl=[INVITATION_URL]&chs=200x200&chld=L|1`
+
+When mobile apps scan this code, they will look for the query parameter `c_i` and use the value of this parameter to decode the Base64 Url encoded string into a Connection Invitation Message. The URL scheme and host can be anything. They are generally used as utility to redirect the user to a friendly page that directs the user to download mobile agents. <br />
+URL schemes can also be used as deep linking tool, to launch mobile agents directly from the link. This is useful if you're developing custom agent apps and would like to support connections and invitations in a convenient user experience.
+
+### Using invitations with deep links
+
+To prepare an invitation with a custom deep link URL scheme, simply format the URL
+
+`my_custom_scheme://launch/?c_i=[INVITATION_DATA]`
+
+The invitation data is retreived from your connection record in the field `invitation` (not `invitationUrl`).
+
+The Streetcred Mobile App uses the following custom deep link URL:
+`id.streetcred://launch?c_i=[INVITATION_DATA]` 
+
+> If you open the `invitationUrl` from the connection record from a mobile device, it will try to launch our mobile agent app.

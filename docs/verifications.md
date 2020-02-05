@@ -1,0 +1,458 @@
+---
+id: verifications
+title: Verifications
+sidebar_label: Verifications
+---
+
+## Introduction
+
+Verification Templates are a way to specify what data to request from a digital wallet. Whenever your organization wants to access information in an individual's wallet or identify someone based on their credentials, you can request the see a verification of the data on their credentials. This can be done digitally using a verification request. First, you'll need to decide what you need to know about the user. Define what attributes you will need to request. Then, decide how you will trust those attributes. You can specify who you trust by the Credential Definition, Schema ID, or Issuer of that data. These are the public pieces of information on the Sovrin network that provide the trust.
+
+Self-attested data is the most basic form of trusted data. You might decide to trust anything the agent sends back. This is similar to how current forms either in person or on the web exist. Perhaps some third-party verification might go on behind the scenes, but for many situations, it doesn't matter where the data has come from. 
+
+Other situations call for more trust. A police officer would need to know who issued someone's drivers license. Our API provides support for both kinds of requested data.
+
+## Create a Verification Definition
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Definitions/CreateVerificationDefinition" target="_blank">POST /definitions/verifications</a>
+
+A verification definition is created and saved on your cloud agent. You can discover your definition based on the ID that is returned or the name.
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "name": "string", // Required. Your chosen name for this verification definition
+  "version": "string", // Required. The version of the verification definition. Must be in Semantic Versioning format (eg 1.1.0 or 2.3.14-alpha) - https://semver.org/
+  "nonce": "string", // Optional. Generally should not be included or set to null unless necessary for testing (TODO: WHAT IS THIS REALLY DOING?)
+  "requested_attributes": { // Optional. All attribute proofs in here will return the attribute values when requested.
+    "additionalProp1": { // Optional. This name will show up on a wallet as the name of the proof that is defined as the value
+      "name": "string", // Required. This value must match the Attribute Name exactly as it is stored in the agent's wallet
+      "restrictions": [ // Optional. Restrictions defined in the list below will filter the proof based on the identifiers that are provided.
+        { // Restrictions given within the same object will be evaluated with AND operations. Restrictions given between different objects will be evalued as OR operations
+          "cred_def_id": "string", // The credential definition ID of the credential
+          "issuer_did": "string", // The issuer's public DID that can be resolved on the ledger
+          "schema_id": "string", // The schema ID of the credential
+          "schema_issuer_did": "string", // The issuer DID of the schema ID of the credential
+          "schema_name": "string", // The exact name of the schema
+          "schema_version": "string" // The exact version of the schema
+        },
+        {
+          ... // additional requirements
+        }
+      ],
+    },
+    ...  // additional attribute proofs can be defined here
+  },
+  "requested_predicates": { // Optional. All proofs defined here will return a bool if the attribute fulfills the given requirements
+    "additionalProp1": { // Optional. The proof name. This will be displayed within the verification request sent to the wallet
+      "p_type": "string", // Required. Predicate Type. >=, <=, or == are the only available options.
+      "p_value": "string", // Required. The value (y) to be compared with the attribute value (x) as such: x (operator) y.
+      "name": "string", // Required. See above
+      "restrictions": [ // See above
+        {
+          "schema_id": "string",
+          "schema_issuer_did": "string",
+          "schema_name": "string",
+          "schema_version": "string",
+          "issuer_did": "string",
+          "cred_def_id": "string"
+        }
+      ],
+    },
+    ... // additional predicate proofs
+  }
+}
+```
+
+<!--Javascript-->
+
+```js
+const verificationDefinition = await client.createVerificationDefinition({
+  proofRequest: {
+    name: "Proof of Employment",
+    version: "1.0",
+    requestedAttributes: {
+      "Verify Name": {
+        name: "Name",
+        restrictions: [
+          {
+            schemaId: credential.schemaId
+          },
+          {
+            credDefId: credential.credentialId
+          },
+          {
+            issuerDid: credential.issuerDid
+          }
+        ]
+      }
+    },
+    requestedPredicates: {
+      "Over Age": {
+        pType: ">=",
+        pValue: "21",
+        name: "Age",
+        restrictions: [
+          {
+            schemaId: credential.schemaId
+          }
+        ]
+      }
+    }
+  }
+});
+```
+
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Proof Request Parameters
+
+| Field |Type | Description |
+|-|-|-|
+| Name | `string` | Required. Your chosen name for this verification definition |
+| Version | `string` | Required. The version of the verification definition. Must be in Semantic Versioning format (eg 1.1.0 or 2.3.14-alpha) - https://semver.org/ |
+| Nonce | `string` | Required. Your chosen name for this verification definition |
+| Requested Attributes | `string` | Optional. All attribute proofs in here will return the attribute   |
+| Proof Name | `string` | Optional. The proof name. This will be displayed within the verification request sent to the wallet |
+| Attribute Name | `string` |Required. This value must match the Attribute Name exactly as it is stored in the agent's wallet |
+| Restrictions | `string` | Optional. Restrictions defined in the list below will filter the proof. Restrictions given within the same object will be evaluated with AND operations.  |
+| Credential Definition ID | `string` | The credential definition ID of the credential|
+| Issuer DID | `string` |  The issuer's public DID that can be resolved on the ledger|
+| Schema ID | `string` | The schema ID of the credential |
+| Schema Issuer DID| `string` | The issuer DID of the whoever created the schema ID of the credential |
+| Schema Version | `string` | The exact version of the schema |
+| Requested Predicates | `string` | Optional. All proofs defined here will return a bool if the attribute fulfills the given requirements |
+| Predicate Type | `string` |  Required. Predicate Type. >=, <=, or == are the only available options.| 
+| Predicate Value | `string` |  Required. The value (y) to be compared with the attribute value (x) as such: x (operator) y. |
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+
+{
+  "id": "37f74f39-97ed-4028-a0ec-30b2bbd88012",
+  "data": {
+    "name": "Test Name",
+    ... // proof request body as defined above
+  }
+}
+```
+
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+| Field |Type | Description |
+|-|-|-|
+| `id` | `string` | The verification definition ID  |
+| `data` | `string` | the Proof Request object defined [above](#proof-request-parameters)
+
+## List all Verification Definitions
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Definitions/ListVerificationDefinitions" >GET /definitions/verifications</a>
+ 
+This will list all of the verification definitions that you have created with your organization. 
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+[
+  {
+    "id": "37f74f39-97ed-4028-a0ec-30b2bbd88012",
+    "data": {
+      "name": "Test Name",
+      ... // proof request body as defined above
+    }
+  }, 
+  {
+    "id": "50209c7d-7a69-4d83-acb1-e3ad30758884",
+    "data": {
+      "name": "Test Name 2",
+      ... // proof request body as defined above
+    }
+  },  
+]
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+| Field |Type | Description |
+|-|-|-|
+| `id` | `string` | The verification definition ID  |
+| `data` | `string` | the Proof Request object defined [above](#proof-request-parameters)
+
+
+## Get the specified verification definition
+<a href="https://app.swaggerhub.com/#/Definitions/GetVerificationDefinition" target="_blank">GET /definitions/verifications/{definitionId}</a>
+
+Use the verification definition ID to get a specific verification definition.
+
+### Parameters
+
+| Field |Type | Description |
+|-|-|-|
+|  `definitionId` | `string` | Required. The verification definition Identifier |
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "id": "string",
+  "data": {
+    "name": "Test Name"
+    ... // the Proof Request
+  }
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+| Field |Type | Description |
+|-|-|-|
+| `id` | `string` | The verification definition ID  |
+
+
+## List all verifications for a connection
+<a href="https://app.swaggerhub.com/#/Verifications/ListVerificationsForConnection" target="_blank">GET /verifications</a>
+
+Now that you have created a verification definition, you can use that definition to request verification of credentials from other agents.
+
+Use the verification definition ID to get a specific verification definition.
+
+### Parameters
+
+| Field |Type | Description |
+|-|-|-|
+|  `connectionId` | `string` | Required. The connection identifier|
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+[
+  {
+    "connectionId": "string",
+    "verificationId": "string",
+    "state": "Requested",
+    "createdAtUtc": "2020-02-05T04:20:11.732Z",
+    "updatedAtUtc": "2020-02-05T04:20:11.732Z",
+    "isValid": true,
+    "verifiedAtUtc": "2020-02-05T04:20:11.732Z",
+    "proof": {
+      "additionalProp1": {
+        "name": "string",
+        "value": "string",
+        "revealed": true,
+        "selfAttested": true,
+        "conditional": true
+      },
+      "additionalProp2": {
+        "name": "string",
+        "value": "string",
+        "revealed": true,
+        "selfAttested": true,
+        "conditional": true
+      },
+      "additionalProp3": {
+        "name": "string",
+        "value": "string",
+        "revealed": true,
+        "selfAttested": true,
+        "conditional": true
+      }
+    }
+  }
+]
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+| Field |Type | Description |
+|-|-|-|
+| `connectionId` | `string` | The identifier of the connection. Note that this is not the pairwise DID of the connection. This can be found by getting the connection details with this ID  |
+|`verificationId`| `string`| The identifier of the verification that has been sent to the connection. This is unique for every verification sent to a connection.|
+|`state`|`string` | The state is in `Requested` when the verification is sent. It changes to `Accepted` or `Rejected` once the receiving agent send a response|
+|`createdAtUtc`|`string($date-time)`| The time that the verification was created | 
+| `udpatedAtUtc` | `string($date-time)` | the time that the state was last changed | 
+| `isValid`| `boolean` | This will be updated to either `true` or `false` when the when the verification has been verified| 
+| `proof` | `object` | Contains the attributes that have been verified and the associated information about the attribute|
+
+
+## Create a Verification
+<a href="https://app.swaggerhub.com/#/Verifications/CreateVerification" target="_blank">POST /verifications</a>
+
+This endpoint can be used to send a verification definition to a connection, which will create a verification ID to track the response from the connection. 
+### Request 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "verificationDefinitionId": "string",
+  "connectionId": "string"
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Parameters
+
+| Field |Type | Description |
+|-|-|-|
+|  `verificationDefinitionId` | `string` | Required. The verification identifier |
+|  `connectionId` | `string` | The connection identifier. This connection should be in state `Connected` in order to receive the verification |
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "id": "string"
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+| Field |Type | Description |
+|-|-|-|
+| `id` | `string` | The verification ID  |
+
+
+## Get verification by identifier
+<a href="https://app.swaggerhub.com/#/Verifications/GetVerification" target="_blank">GET /verifications/{verificationId}</a>
+
+This endpoint should be used to  
+
+### Parameters
+
+| Field |Type | Description |
+|-|-|-|
+|  `verificationId` | `string` | Required. The verification identifier |
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "connectionId": "string",
+  "verificationId": "string",
+  "state": "Requested",
+  "createdAtUtc": "2020-02-05T04:39:47.915Z",
+  "updatedAtUtc": "2020-02-05T04:39:47.915Z",
+  "isValid": true,
+  "verifiedAtUtc": "2020-02-05T04:39:47.915Z",
+  "proof": {
+    "additionalProp1": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    },
+    "additionalProp2": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    },
+    "additionalProp3": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    }
+  }
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+See above for description of attributes
+
+## Execute Verification for Ledger
+<a href="https://app.swaggerhub.com/#/Verifications/VerifyVerification" target="_blank">GET /verifications/{verificationId}/verify</a>
+
+Verify the proof against the ledger
+
+### Parameters
+
+| Field | Type | Description |
+|-|-|-|
+|  `verificationId` | `string` | Required. The verification identifier |
+
+### Response 
+<!--DOCUSAURUS_CODE_TABS-->
+<!-- JSON -->
+```js
+{
+  "connectionId": "string",
+  "verificationId": "string",
+  "state": "Requested",
+  "createdAtUtc": "2020-02-05T04:39:47.915Z",
+  "updatedAtUtc": "2020-02-05T04:39:47.915Z",
+  "isValid": true,
+  "verifiedAtUtc": "2020-02-05T04:39:47.915Z",
+  "proof": {
+    "additionalProp1": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    },
+    "additionalProp2": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    },
+    "additionalProp3": {
+      "name": "string",
+      "value": "string",
+      "revealed": true,
+      "selfAttested": true,
+      "conditional": true
+    }
+  }
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+
+## Additional Information
+
+
+### Explanation of Restrictions List
+
+In the verification template, the `restrictions` list defines where this data is allowed to come from. The three most useful options include:
+
+- `schemaId`: anyone who creates a credential with a certain schema ID can issue it to an individual. The schema ID only provides trust that the data is in the correct format.
+- `credentialDefinitionId`: Because a credential definition is signed by an issuer, the credential definition defines both the format of the data and also who sent it to the wallet. This is the most commonly used restriction when contructing definitions. The credential definition would be an ID that is written to the sovrin ledger, and will prove that the credential an agent sends to you is both issued by the organization and is in the format that you need.
+- `issuerDid`: for situations where you only care about where the credential is from and not what format the data is in, you may also use only the issuer's DID. This is also resolvable on the sovrin network and will prove that the data you have received was sent from a trusted source. It will not provide any information around the format of the data that you're receiving.
+
+When sending a Proof Request, you may choose to request an Attribute Proof (TODO: FIND BETTER NAME) or a Predicate Proof. The attribute proofs will reveal the actual data of each attribute you request. The Predicate proofs will only return a `True` or `False` value on whether the attribute matches your specified query. For example, if someone's `Date of Birth` is before 1998, you may request that the person provide their `Year of Birth` attribute, and only from the `Driver's License` or `Passport` credentials issued by the `US Government`:
+
+```js
+{
+  ...
+  "proof_of_year_of_birth": {
+    "p_type": "<=",
+    "p_value": "1998",
+    "name": "Year of Birth",
+    "restrictions": [
+      {
+        "cred_def_id": "<US_drivers_license_cred_def_id>"
+      },
+      {
+        "cred_def_id": "<drivers_license_cred_def_id>"
+      }
+    ]
+  }
+   ...
+}
+```
+
+This will return either a `true` or `false` value to the attribute that a user supplies. If the value's signature matches the signatures stored in the credential definition, it will return true. This value can be trusted to have come from whichever Credential Definition ID has been specified, which can only be created by a unique issuer on the sovrin network.
+
+### Predicate Proofs 
+Predicate proofs have three possible types: `>=`, `<=`, and `==`. The `name` must match the attribute name exactly, both in spelling and in capitalization in order to be recognized.
+
+
+
+
+

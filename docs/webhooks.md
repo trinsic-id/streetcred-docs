@@ -1,0 +1,169 @@
+---
+id: webhooks
+title: Webhooks
+sidebar_label: Webhooks
+---
+
+## Introduction
+Webhooks allow you to connect your hosted agency tenant with your internal service. They can be used to notify you when an agent message is processed by your agentWebhooks are scoped to a tenant. You can register up to 5 notification webhooks for each tenant.
+
+There are two types of webhooks
+- Notification webhooks - used to setup alerts and notifications after an agent message of any type is processed
+- Endorser webhooks **Coming soon** - used to call another running agent to sign a request that will be submitted to the ledger.
+
+> To use endorser signing webhooks you must setup your tenant for delegated signing during registration.
+## Create a notification webhook
+
+To create new notification webhook, use the `POST /webhooks` endpoint, or use the service client as described below.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--JavaScript-->
+```js
+const result = await client.createWebhook({
+    webhookParameters: {
+        "url": "<your_endpoint_url>",
+        "type": "Notification"
+    }
+});
+console.log("Webhook created: " + result.id);
+```
+<!--C#-->
+```cs
+var webhook = await client.CreateWebhookAsync(new WebhookParameters
+{
+    Url = "<your_endpoint_url>",
+    Type = "Notification"
+});
+Console.WriteLine($"Webhook created: {result.Id}");
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Parameters
+
+You can specify the following required parameters.
+
+| Field | Type | Description |
+|-|-|-|
+|`url` | _string required_ | Your webhook URL. This address must be publicly accessible and will be called everytime a new agent message is proceessed by your agent. This only includes incoming messages.|
+| `type` | _string required_ | The type of webhook. Possible values are `Notification`, `DelegatedSigning`. Currently, only `Notification` webhooks are supported.|
+
+### API Reference
+
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/CreateWebhook" target="_blank">CreateWebhook</a> - `POST /webhooks​`
+
+## Setup your webhook endpoint
+
+To setup a listening webhook in your service, your endpoint must listen to `POST` http message. The body of the request will have the following parameters. The content of the body will be set to `application/json`.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--JSON-->
+```json
+POST 'https://your/webhook/url'
+Content-Type: application/json
+
+Body:
+{
+    "message_type": "new_connection",
+    "object_id": "00000000",
+    "data": {
+        "param1": "value1",
+        "param2": "value2"
+        // ...
+    }
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Parameters
+| Field | Type | Description |
+|--|--|--|
+| `message_type` | _string_ | Indicates the type of the event/message. Possible values are `new_connection`, `credential_request`, `verification`, `credential_authentication` or `new_inbox_message`.|
+| `object_id` | _string_ | The object identifier for the affected record. This can be the `connectionId` when message type is `new_connection`, or `credentialId` if the message type is `credential_request`, etc.|
+| `data` | _name/value dictionary_ | Additional data about this object. In most cases, this will contain `ConnectionId` to indicate the connection associated with this event.|
+
+## List registered webhooks
+
+To get a list of all registered webhooks, call the `GET /webhooks` endpoint or use the service client for your platform.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--JavaScript-->
+```js
+const webhooks = await client.listWebhooks();
+```
+<!--C#-->
+```csharp
+var webhooks = await client.ListWebhooksAsync();
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Response
+
+Collection of `WebhookContract`
+
+- `id`	_[string]_ - Webhook identifier
+- `url`	_[string]_ - Webhook endpoint url
+- `type` _[string]_ - The type of the webhook. Possible values are: `Notification`, `DelegatedSigning`
+- `enabled`	_[boolean]_ - Indicates if the webhook is enabled or disabled.
+
+### API Reference
+
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/ListWebhooks" target="_blank">ListWebhooks</a> - `GET /webhooks`
+
+## Enable or disable a webhook
+
+You can disable some webhooks to temporarily prevent them from being invoked. Only webhooks that are enabled will be called by your hosted agent.
+
+To disable a webhook, call the `PUT /webhooks​/{webhookId}​/disable` endpoint. Similarly, to enable a webhook call the `PUT /webhooks​/{webhookId}​/enable` endpoint or use the service clients as described below.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--JavaScript-->
+```js
+// Disable a webhook
+await client.disableWebhook(webhookId);
+
+// Enable a webhook
+await client.enableWebhook(webhookId);
+```
+<!--C#-->
+```csharp
+// Disable a webhook
+await client.DisableWebhooksAsync(webhookId);
+
+// Enable a webhook
+await client.EnableWebhooksAsync(webhookId);
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Parameters
+- `webhookId` _[string required]_ - The webhook identifier
+
+### API Reference
+
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/EnableWebhook" target="_blank">EnableWebhook</a> - `PUT /webhooks​/{webhookId}​/enable`
+
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/DisableWebhook" target="_blank">DisableWebhook</a> - `PUT /webhooks​/{webhookId}​/disable`
+
+## Remove a webhook
+
+To remove a webhook permanently, call the `DELETE /webhooks/{webhookId}` endpoint or use the service clients as described below.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--JavaScript-->
+```js
+await client.removeWebhook(webhookId);
+```
+<!--C#-->
+```csharp
+await client.RemoveWebhookAsync(webhookId);
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+### Parameters
+- `webhookId` _[string required]_ - The webhook identifier
+
+### API Reference
+
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/RemoveWebhook" target="_blank">RemoveWebhook</a> - `DELETE /webhooks​/{webhookId}​`
+
+
+Notification webhooks are used to setup alerts and notifications after an agent message of any type is processed by your hosted agent. Webhooks can be setup in any runtime that can listen to incoming HTTP traffic.

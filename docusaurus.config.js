@@ -8,19 +8,24 @@ module.exports = {
   projectName: 'Streetcred API Docs', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'API Docs',
+      title: 'Streetcred ID',
       logo: {
         alt: 'SC',
         src: 'img/streetcred_colorful.png',
       },
       links: [
-        {to: 'docs/getting-started', label: 'Get Started', position: 'left'},
-        {to: 'swagger', label: 'API Reference', position: 'left'},
+        {to: 'docs/getting-started', label: 'Docs', position: 'left'},
+        {to: 'docs/api', label: 'API', position: 'right'},
         {
           href: 'https://developer.streetcred.id',
-          label: 'Dashboard',
-          position: 'left',
+          label: 'Portal',
+          position: 'right',
         },
+        {
+          href: 'https://streetcred.id/contact-us',
+          label: 'Support',
+          position: 'right',
+        }
       ],
     },
     footer: {
@@ -55,12 +60,12 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Open Source',
+              href: 'https://chat.hyperledger.org/channel/aries',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Website',
+              href: 'https://streetcred.id',
             },
           ],
         },
@@ -69,20 +74,20 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'blog',
+              to: 'https://medium.com/streetcred-id',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/streetcred-id',
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              href: 'https://twitter.com/streetcred_id',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Streetcred ID, Inc.`,
     },
   },
   presets: [

@@ -3,7 +3,8 @@ id: connections
 title: Connections
 sidebar_label: Connections
 ---
-
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Connections represent a peer-to-peer relationship using a pairwise key exchange. When two parties establish a connection, they can exchange various data messages securely.
 
@@ -16,6 +17,35 @@ In our API, each connection is represened with a `connectionId` and this identif
 ## Creating new connection (invitation)
 
 To create a new invitation, call the `POST /connections` endpoint or use the service clients for your platform.
+
+<Tabs
+  defaultValue="cs"
+  values= {[
+    { label: 'C#', value: 'cs', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="js">
+
+```js
+    const connection = await client.createConnection({
+        connectionInvitationParameters: {
+            connectionId: "unique id", 
+            multiParty: false
+        }
+    });
+```
+
+</TabItem>
+<TabItem value="cs">
+
+```cs
+var connectionId = await client.CreateConnectionAsync(new ConnectionInvitationParameters());
+```
+
+</TabItem>
+</Tabs>
+
 
 ### Parameters
 
@@ -34,12 +64,35 @@ Creating a connection responds with the same response body as the [GET /Connecti
 
 ### API Reference
 
-Try creating a connection at the - 
-
+Try creating a connection at the <a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Connections/CreateConnection" target="_blank">CreateConnection</a> - 
+`POST /connections`
 
 ## Retrieving connections data
 
 To get the details of a connection (including invitation details), call the `GET /connections/{connectionId}` endpoint, by passing the connection identifier you obtained as result when creating new connection.
+
+<Tabs
+  defaultValue="cs"
+  values= {[
+    { label: 'C#', value: 'cs', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="js">
+
+```js
+const connectionContract = await client.getConnection(connectionId);
+```
+
+</TabItem>
+<TabItem value="cs">
+
+```cs
+var connectionContract = await client.GetConnectionAsync(connectionId);
+```
+
+</TabItem>
+</Tabs>
 
 
 ### Response
@@ -55,8 +108,8 @@ The response of this operation is an object of type `ConnectionContract`. This o
 
 ### API Reference
 
-
-`GET /connections/{connectionId}`
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Connections/GetConnection" target="_blank">GetConnection</a> - 
+`GET /connections/{'{connectionId}'}`
 
 ## Sending invitations to users
 

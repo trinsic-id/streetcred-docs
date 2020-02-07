@@ -3,7 +3,7 @@ import { RedocStandalone } from 'redoc';
 
 function Redoc(props){
 	return <RedocStandalone
-  specUrl="./swagger.json"
+  specUrl="./agency.json"
   options={{
     nativeScrollbars: true,
     theme: { colors: { primary: { main: '#dd5522' } } },

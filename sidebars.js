@@ -7,6 +7,12 @@
 
 module.exports = {
   someSidebar: {
-    "Documentation": ['getting-started', 'connections', 'credentials', 'verifications', 'webhooks'],
+    "Getting Started": ['getting-started', 'dev-portal', 'faq'],
+    "Guides": ['connections', 'credentials', 'verifications', 'organizations', 'webhooks'],
+    "API Reference": [
+      'api',
+      {type: 'link', label: 'Agency API', href: '../agency'},
+      {type: 'link', label: 'Custodian', href: '../custody'}
+      ]
   },
 };

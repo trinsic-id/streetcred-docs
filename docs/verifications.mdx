@@ -3,6 +3,9 @@ id: verifications
 title: Verifications
 sidebar_label: Verifications
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Introduction
 
@@ -13,11 +16,23 @@ Self-attested data is the most basic form of trusted data. You might decide to t
 Other situations call for more trust. A police officer would need to know who issued someone's drivers license. Our API provides support for both kinds of requested data.
 
 ## Create a Verification Definition
+
 <a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Definitions/CreateVerificationDefinition" target="_blank">POST /definitions/verifications</a>
 
+
+
 A verification definition is created and saved on your cloud agent. You can discover your definition based on the ID that is returned or the name.
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
+
+<Tabs
+  defaultValue="json"
+  values= {[
+    { label: 'JSON', value: 'json', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="json">
+
 ```js
 {
   "name": "string", // Required. Your chosen name for this verification definition
@@ -63,7 +78,8 @@ A verification definition is created and saved on your cloud agent. You can disc
 }
 ```
 
-<!--Javascript-->
+</TabItem>
+<TabItem value="js">
 
 ```js
 const verificationDefinition = await client.createVerificationDefinition({
@@ -102,7 +118,9 @@ const verificationDefinition = await client.createVerificationDefinition({
 });
 ```
 
-<!--END_DOCUSAURUS_CODE_TABS-->
+</TabItem>
+</Tabs>
+
 
 ### Proof Request Parameters
 
@@ -125,8 +143,16 @@ const verificationDefinition = await client.createVerificationDefinition({
 | Predicate Value | `string` |  Required. The value (y) to be compared with the attribute value (x) as such: x (operator) y. |
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
+<Tabs
+  defaultValue="json"
+  values= {[
+    { label: 'JSON', value: 'json', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="json">
+
 ```js
 
 {
@@ -138,7 +164,8 @@ const verificationDefinition = await client.createVerificationDefinition({
 }
 ```
 
-<!--END_DOCUSAURUS_CODE_TABS-->
+</TabItem>
+</Tabs>
 
 | Field |Type | Description |
 |-|-|-|
@@ -151,8 +178,15 @@ const verificationDefinition = await client.createVerificationDefinition({
 This will list all of the verification definitions that you have created with your organization. 
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
+ <Tabs
+  defaultValue="json"
+  values= {[
+    { label: 'JSON', value: 'json', },
+  ]
+}>
+<TabItem value="json">
+
 ```js
 [
   {
@@ -171,7 +205,9 @@ This will list all of the verification definitions that you have created with yo
   },  
 ]
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 | Field |Type | Description |
 |-|-|-|
@@ -180,7 +216,7 @@ This will list all of the verification definitions that you have created with yo
 
 
 ## Get the specified verification definition
-<a href="https://app.swaggerhub.com/#/Definitions/GetVerificationDefinition" target="_blank">GET /definitions/verifications/{definitionId}</a>
+<a href="https://app.swaggerhub.com/#/Definitions/GetVerificationDefinition" target="_blank">GET /definitions/verifications/{'{definitionId}'}</a>
 
 Use the verification definition ID to get a specific verification definition.
 
@@ -191,8 +227,7 @@ Use the verification definition ID to get a specific verification definition.
 |  `definitionId` | `string` | Required. The verification definition Identifier |
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
 ```js
 {
   "id": "string",
@@ -202,7 +237,6 @@ Use the verification definition ID to get a specific verification definition.
   }
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 | Field |Type | Description |
 |-|-|-|
@@ -223,8 +257,7 @@ Use the verification definition ID to get a specific verification definition.
 |  `connectionId` | `string` | Required. The connection identifier|
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
 ```js
 [
   {
@@ -261,7 +294,6 @@ Use the verification definition ID to get a specific verification definition.
   }
 ]
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 | Field |Type | Description |
 |-|-|-|
@@ -279,15 +311,14 @@ Use the verification definition ID to get a specific verification definition.
 
 This endpoint can be used to send a verification definition to a connection, which will create a verification ID to track the response from the connection. 
 ### Request 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
 ```js
 {
   "verificationDefinitionId": "string",
   "connectionId": "string"
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
 
 ### Parameters
 
@@ -297,14 +328,11 @@ This endpoint can be used to send a verification definition to a connection, whi
 |  `connectionId` | `string` | The connection identifier. This connection should be in state `Connected` in order to receive the verification |
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
 ```js
 {
   "id": "string"
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 | Field |Type | Description |
 |-|-|-|
@@ -312,7 +340,7 @@ This endpoint can be used to send a verification definition to a connection, whi
 
 
 ## Get verification by identifier
-<a href="https://app.swaggerhub.com/#/Verifications/GetVerification" target="_blank">GET /verifications/{verificationId}</a>
+<a href="https://app.swaggerhub.com/#/Verifications/GetVerification" target="_blank">GET /verifications/{'{verificationId}'}</a>
 
 This endpoint should be used to  
 
@@ -323,8 +351,7 @@ This endpoint should be used to
 |  `verificationId` | `string` | Required. The verification identifier |
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
 ```js
 {
   "connectionId": "string",
@@ -359,12 +386,12 @@ This endpoint should be used to
   }
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
 
 See above for description of attributes
 
 ## Execute Verification for Ledger
-<a href="https://app.swaggerhub.com/#/Verifications/VerifyVerification" target="_blank">GET /verifications/{verificationId}/verify</a>
+<a href="https://app.swaggerhub.com/#/Verifications/VerifyVerification" target="_blank">GET /verifications/{'{verificationId}'}/verify</a>
 
 Verify the proof against the ledger
 
@@ -375,8 +402,8 @@ Verify the proof against the ledger
 |  `verificationId` | `string` | Required. The verification identifier |
 
 ### Response 
-<!--DOCUSAURUS_CODE_TABS-->
-<!-- JSON -->
+
+
 ```js
 {
   "connectionId": "string",
@@ -411,7 +438,6 @@ Verify the proof against the ledger
   }
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 
 ## Additional Information

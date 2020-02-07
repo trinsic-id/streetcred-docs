@@ -3,6 +3,8 @@ id: webhooks
 title: Webhooks
 sidebar_label: Webhooks
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 ## Introduction
 Webhooks allow you to connect your hosted agency tenant with your internal service. They can be used to notify you when an agent message is processed by your agentWebhooks are scoped to a tenant. You can register up to 5 notification webhooks for each tenant.
@@ -16,8 +18,15 @@ There are two types of webhooks
 
 To create new notification webhook, use the `POST /webhooks` endpoint, or use the service client as described below.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--JavaScript-->
+<Tabs
+  defaultValue='js'
+  values= {[
+    { label: 'Javascript', value: 'js', },
+    { label: 'C#', value: 'cs', },
+  ]
+}>
+<TabItem value="js">
+
 ```js
 const result = await client.createWebhook({
     webhookParameters: {
@@ -27,7 +36,10 @@ const result = await client.createWebhook({
 });
 console.log("Webhook created: " + result.id);
 ```
-<!--C#-->
+
+</TabItem>
+<TabItem value="cs">
+
 ```cs
 var webhook = await client.CreateWebhookAsync(new WebhookParameters
 {
@@ -36,7 +48,9 @@ var webhook = await client.CreateWebhookAsync(new WebhookParameters
 });
 Console.WriteLine($"Webhook created: {result.Id}");
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 ### Parameters
 
@@ -55,8 +69,7 @@ You can specify the following required parameters.
 
 To setup a listening webhook in your service, your endpoint must listen to `POST` http message. The body of the request will have the following parameters. The content of the body will be set to `application/json`.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--JSON-->
+
 ```json
 POST 'https://your/webhook/url'
 Content-Type: application/json
@@ -72,7 +85,6 @@ Body:
     }
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
 
 ### Parameters
 | Field | Type | Description |
@@ -85,16 +97,28 @@ Body:
 
 To get a list of all registered webhooks, call the `GET /webhooks` endpoint or use the service client for your platform.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--JavaScript-->
+<Tabs
+  defaultValue='js'
+  values= {[
+    { label: 'Javascript', value: 'js', },
+    { label: 'C#', value: 'cs', },
+  ]
+}>
+<TabItem value="js">
+
 ```js
 const webhooks = await client.listWebhooks();
 ```
-<!--C#-->
-```csharp
+
+</TabItem>
+<TabItem value="cs">
+
+```cs
 var webhooks = await client.ListWebhooksAsync();
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 ### Response
 
@@ -115,8 +139,15 @@ You can disable some webhooks to temporarily prevent them from being invoked. On
 
 To disable a webhook, call the `PUT /webhooks​/{webhookId}​/disable` endpoint. Similarly, to enable a webhook call the `PUT /webhooks​/{webhookId}​/enable` endpoint or use the service clients as described below.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--JavaScript-->
+<Tabs
+  defaultValue="js"
+  values= {[
+    { label: 'C#', value: 'cs', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="js">
+
 ```js
 // Disable a webhook
 await client.disableWebhook(webhookId);
@@ -124,46 +155,65 @@ await client.disableWebhook(webhookId);
 // Enable a webhook
 await client.enableWebhook(webhookId);
 ```
-<!--C#-->
-```csharp
+
+</TabItem>
+<TabItem value="cs">
+
+
+```cs
 // Disable a webhook
 await client.DisableWebhooksAsync(webhookId);
 
 // Enable a webhook
 await client.EnableWebhooksAsync(webhookId);
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
 
 ### Parameters
 - `webhookId` _[string required]_ - The webhook identifier
 
 ### API Reference
 
-<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/EnableWebhook" target="_blank">EnableWebhook</a> - `PUT /webhooks​/{webhookId}​/enable`
-
-<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/DisableWebhook" target="_blank">DisableWebhook</a> - `PUT /webhooks​/{webhookId}​/disable`
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/EnableWebhook" target="_blank">EnableWebhook</a> - `PUT /webhooks​/{'{webhookId}'}​/enable`
+<br/>
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/DisableWebhook" target="_blank">DisableWebhook</a> - `PUT /webhooks​/{'{webhookId}'}​/disable`
 
 ## Remove a webhook
 
 To remove a webhook permanently, call the `DELETE /webhooks/{webhookId}` endpoint or use the service clients as described below.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--JavaScript-->
+<Tabs
+  defaultValue="js"
+  values= {[
+    { label: 'C#', value: 'cs', },
+    { label: 'Javascript', value: 'js', },
+  ]
+}>
+<TabItem value="js">
+
 ```js
 await client.removeWebhook(webhookId);
 ```
-<!--C#-->
-```csharp
+
+</TabItem>
+<TabItem value="cs">
+
+```cs
 await client.RemoveWebhookAsync(webhookId);
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+
+</TabItem>
+</Tabs>
+
 
 ### Parameters
 - `webhookId` _[string required]_ - The webhook identifier
 
 ### API Reference
 
-<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/RemoveWebhook" target="_blank">RemoveWebhook</a> - `DELETE /webhooks​/{webhookId}​`
+<a href="https://app.swaggerhub.com/apis-docs/Streetcred/agency/v1#/Webhooks/RemoveWebhook" target="_blank">RemoveWebhook</a> - `DELETE /webhooks​/{'{webhookId}'}​`
 
 
 Notification webhooks are used to setup alerts and notifications after an agent message of any type is processed by your hosted agent. Webhooks can be setup in any runtime that can listen to incoming HTTP traffic.

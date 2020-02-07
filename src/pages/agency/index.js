@@ -3,9 +3,9 @@ import SwaggerUI from 'swagger-ui-react';
 import "swagger-ui-react/swagger-ui.css";
 import Layout from '@theme/Layout';
 
-function Swagger(props) {
+function Agency(props) {
 	return (
-		<Layout><SwaggerUI url="./swagger.json"/></Layout>
+		<Layout><SwaggerUI url="./agency.json"/></Layout>
 	)
 }
-export default Swagger
+export default Agency

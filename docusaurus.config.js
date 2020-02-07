@@ -1,11 +1,11 @@
 module.exports = {
   title: 'Streetcred API Documentation',
   tagline: 'SSI Resources for Developers',
-  url: 'https://docs.streetcred.id',
-  baseUrl: '/',
+  url: 'streetcred-id.github.io',
+  baseUrl: '/streetcred-docs/',
   favicon: 'img/streetcred_colorful.png',
-  organizationName: 'Streetcred ID', // Usually your GitHub org/user name.
-  projectName: 'Streetcred API Docs', // Usually your repo name.
+  organizationName: 'streetcred-id', // Usually your GitHub org/user name.
+  projectName: 'streetcred-docs', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'Streetcred ID',

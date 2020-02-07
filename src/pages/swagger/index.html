@@ -1,0 +1,2832 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Streetcred ID Credentials API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>Streetcred ID Credentials API</h1>
+    <div class="app-desc">An API to issue, manage, and verify self-sovereign identity credentials</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: v1</div>
+    <div class="app-desc">BasePath:/agency/v1</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+    <ol>
+      <li>APIKey KeyParamName:Authorization KeyInQuery:false KeyInHeader:true</li>
+      <li>APIKey KeyParamName:X-Streetcred-Subscription-Key KeyInQuery:false KeyInHeader:true</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Common">Common</a></h4>
+  <ul>
+  <li><a href="#acceptTransactionAuthorAgreement"><code><span class="http-method">put</span> /common/networks/{networkId}/txnAuthorAgreement</code></a></li>
+  <li><a href="#getTransactionAuthorAgreement"><code><span class="http-method">get</span> /common/networks/{networkId}/txnAuthorAgreement</code></a></li>
+  <li><a href="#listNetworks"><code><span class="http-method">get</span> /common/networks</code></a></li>
+  <li><a href="#uploadImage"><code><span class="http-method">post</span> /common/upload</code></a></li>
+  </ul>
+  <h4><a href="#Connections">Connections</a></h4>
+  <ul>
+  <li><a href="#createConnection"><code><span class="http-method">post</span> /connections</code></a></li>
+  <li><a href="#deleteConnection"><code><span class="http-method">delete</span> /connections/{connectionId}</code></a></li>
+  <li><a href="#getConnection"><code><span class="http-method">get</span> /connections/{connectionId}</code></a></li>
+  <li><a href="#listConnections"><code><span class="http-method">get</span> /connections</code></a></li>
+  </ul>
+  <h4><a href="#Credentials">Credentials</a></h4>
+  <ul>
+  <li><a href="#createCredential"><code><span class="http-method">post</span> /credentials</code></a></li>
+  <li><a href="#getCredential"><code><span class="http-method">get</span> /credentials/{credentialId}</code></a></li>
+  <li><a href="#issueCredential"><code><span class="http-method">put</span> /credentials/{credentialId}</code></a></li>
+  <li><a href="#listCredentials"><code><span class="http-method">get</span> /credentials</code></a></li>
+  <li><a href="#revokeCredential"><code><span class="http-method">delete</span> /credentials/{credentialId}</code></a></li>
+  </ul>
+  <h4><a href="#Definitions">Definitions</a></h4>
+  <ul>
+  <li><a href="#createCredentialDefinition"><code><span class="http-method">post</span> /definitions/credentials</code></a></li>
+  <li><a href="#createCredentialDefinitionForSchemaId"><code><span class="http-method">post</span> /definitions/credentials/{schemaId}</code></a></li>
+  <li><a href="#createSchema"><code><span class="http-method">post</span> /definitions/schemas</code></a></li>
+  <li><a href="#createVerificationDefinition"><code><span class="http-method">post</span> /definitions/verifications</code></a></li>
+  <li><a href="#getCredentialDefinition"><code><span class="http-method">get</span> /definitions/credentials/{definitionId}</code></a></li>
+  <li><a href="#getVerificationDefinition"><code><span class="http-method">get</span> /definitions/verifications/{definitionId}</code></a></li>
+  <li><a href="#listCredentialDefinitions"><code><span class="http-method">get</span> /definitions/credentials</code></a></li>
+  <li><a href="#listSchemas"><code><span class="http-method">get</span> /definitions/schemas</code></a></li>
+  <li><a href="#listVerificationDefinitions"><code><span class="http-method">get</span> /definitions/verifications</code></a></li>
+  </ul>
+  <h4><a href="#Messaging">Messaging</a></h4>
+  <ul>
+  <li><a href="#getMessage"><code><span class="http-method">get</span> /messages/{messageId}</code></a></li>
+  <li><a href="#listMessages"><code><span class="http-method">get</span> /messages/connection/{connectionId}</code></a></li>
+  <li><a href="#sendMessage"><code><span class="http-method">post</span> /messages</code></a></li>
+  </ul>
+  <h4><a href="#Tenants">Tenants</a></h4>
+  <ul>
+  <li><a href="#createTenant"><code><span class="http-method">post</span> /tenants</code></a></li>
+  <li><a href="#deleteTenant"><code><span class="http-method">delete</span> /tenants/{tenantId}</code></a></li>
+  <li><a href="#getIssuerStatus"><code><span class="http-method">get</span> /tenants/issuerStatus</code></a></li>
+  <li><a href="#getTenant"><code><span class="http-method">get</span> /tenants/{tenantId}</code></a></li>
+  <li><a href="#listTenants"><code><span class="http-method">get</span> /tenants</code></a></li>
+  </ul>
+  <h4><a href="#Verifications">Verifications</a></h4>
+  <ul>
+  <li><a href="#createVerification"><code><span class="http-method">post</span> /verifications</code></a></li>
+  <li><a href="#getVerification"><code><span class="http-method">get</span> /verifications/{verificationId}</code></a></li>
+  <li><a href="#listVerificationsForConnection"><code><span class="http-method">get</span> /verifications</code></a></li>
+  <li><a href="#verifyVerification"><code><span class="http-method">get</span> /verifications/{verificationId}/verify</code></a></li>
+  </ul>
+  <h4><a href="#Webhooks">Webhooks</a></h4>
+  <ul>
+  <li><a href="#createWebhook"><code><span class="http-method">post</span> /webhooks</code></a></li>
+  <li><a href="#disableWebhook"><code><span class="http-method">put</span> /webhooks/{webhookId}/disable</code></a></li>
+  <li><a href="#enableWebhook"><code><span class="http-method">put</span> /webhooks/{webhookId}/enable</code></a></li>
+  <li><a href="#listWebhooks"><code><span class="http-method">get</span> /webhooks</code></a></li>
+  <li><a href="#removeWebhook"><code><span class="http-method">delete</span> /webhooks/{webhookId}</code></a></li>
+  </ul>
+
+  <h1><a name="Common">Common</a></h1>
+  <div class="method"><a name="acceptTransactionAuthorAgreement"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /common/networks/{networkId}/txnAuthorAgreement</code></pre></div>
+    <div class="method-summary">Accept the latest transaction author agreement on the specified network. (<span class="nickname">acceptTransactionAuthorAgreement</span>)</div>
+    <div class="method-notes">Accept the latest transaction author agreement on the specified network.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">networkId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTransactionAuthorAgreement"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /common/networks/{networkId}/txnAuthorAgreement</code></pre></div>
+    <div class="method-summary">Return the latest transaction author agreement and acceptance methods if one
+is set on the network with the specified {networkId} (<span class="nickname">getTransactionAuthorAgreement</span>)</div>
+    <div class="method-notes">Return the latest transaction author agreement and acceptance methods if one
+is set on the network with the specified {networkId}</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">networkId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Network identifier </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#NetworkTxnAgreementContract">NetworkTxnAgreementContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "acceptanceMethods" : {
+    "key" : "acceptanceMethods"
+  },
+  "text" : "text",
+  "version" : "version"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#NetworkTxnAgreementContract">NetworkTxnAgreementContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listNetworks"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /common/networks</code></pre></div>
+    <div class="method-summary">List available ledger networks (<span class="nickname">listNetworks</span>)</div>
+    <div class="method-notes">Returns a list of available ledger networks. Some networks are available based on your subscription.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#NetworkContractArray">NetworkContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#NetworkContractArray">NetworkContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="uploadImage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /common/upload</code></pre></div>
+    <div class="method-summary">Upload image (<span class="nickname">uploadImage</span>)</div>
+    <div class="method-notes">Upload an image and return a URL with the static remote location</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">uploadedFiles (required)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div><div class="param">filename (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div><div class="param">contentType (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CommonUploadPost200ApplicationJsonResponse">CommonUploadPost200ApplicationJsonResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{ }</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CommonUploadPost200ApplicationJsonResponse">CommonUploadPost200ApplicationJsonResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Connections">Connections</a></h1>
+  <div class="method"><a name="createConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /connections</code></pre></div>
+    <div class="method-summary">Create a new connection (<span class="nickname">createConnection</span>)</div>
+    <div class="method-notes">Initiate a new connection by creating an invitation. The newly created connection record
+will be in state 'Invited' until the other party has accepted the invitation.
+The response body includes details about the newly creation connection
+<br /><i>Please check the <a href="https://docs.streetcred.id/docs/connections">documentation</a> on how to present the invitation data to mobile clients using a QR code.</i></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">connectionInvitationParameters <a href="#ConnectionInvitationParameters">ConnectionInvitationParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Connection invitation parameters </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ConnectionContract">ConnectionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "endpoint" : {
+    "verkey" : "verkey",
+    "uri" : "uri",
+    "did" : "did"
+  },
+  "theirDid" : "theirDid",
+  "theirKey" : "theirKey",
+  "invitation" : "invitation",
+  "invitationUrl" : "invitationUrl",
+  "imageUrl" : "imageUrl",
+  "createdAtUtc" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "name",
+  "connectionId" : "connectionId",
+  "myDid" : "myDid",
+  "myKey" : "myKey",
+  "state" : { }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#ConnectionContract">ConnectionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /connections/{connectionId}</code></pre></div>
+    <div class="method-summary">Delete a connection record (<span class="nickname">deleteConnection</span>)</div>
+    <div class="method-notes">Delete a connection record</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Connection identifier </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /connections/{connectionId}</code></pre></div>
+    <div class="method-summary">Get a connection by connectionId (<span class="nickname">getConnection</span>)</div>
+    <div class="method-notes">Get a connection by connectionId</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The connection identifier. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ConnectionContract">ConnectionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "endpoint" : {
+    "verkey" : "verkey",
+    "uri" : "uri",
+    "did" : "did"
+  },
+  "theirDid" : "theirDid",
+  "theirKey" : "theirKey",
+  "invitation" : "invitation",
+  "invitationUrl" : "invitationUrl",
+  "imageUrl" : "imageUrl",
+  "createdAtUtc" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "name",
+  "connectionId" : "connectionId",
+  "myDid" : "myDid",
+  "myKey" : "myKey",
+  "state" : { }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#ConnectionContract">ConnectionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listConnections"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /connections</code></pre></div>
+    <div class="method-summary">List all connections (<span class="nickname">listConnections</span>)</div>
+    <div class="method-notes">Retrieve a list of all connections. Optionally, list only connections in a specified state.</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">state (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ConnectionContractArray">ConnectionContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#ConnectionContractArray">ConnectionContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Credentials">Credentials</a></h1>
+  <div class="method"><a name="createCredential"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /credentials</code></pre></div>
+    <div class="method-summary">Sends credential offer of the specified DefinitionId to the specified ConnectionId (<span class="nickname">createCredential</span>)</div>
+    <div class="method-notes">Sends credential offer of the specified DefinitionId to the specified ConnectionId</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">credentialOfferParameters <a href="#CredentialOfferParameters">CredentialOfferParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The definition and connection to which this offer will be sent. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialContract">CredentialContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "schemaId" : "schemaId",
+  "values" : {
+    "key" : "values"
+  },
+  "credentialId" : "credentialId",
+  "connectionId" : "connectionId",
+  "state" : { },
+  "definitionId" : "definitionId"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialContract">CredentialContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCredential"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /credentials/{credentialId}</code></pre></div>
+    <div class="method-summary">Gets the credentials. (<span class="nickname">getCredential</span>)</div>
+    <div class="method-notes">Gets the credentials.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">credentialId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The credential identifier. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialContract">CredentialContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "schemaId" : "schemaId",
+  "values" : {
+    "key" : "values"
+  },
+  "credentialId" : "credentialId",
+  "connectionId" : "connectionId",
+  "state" : { },
+  "definitionId" : "definitionId"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialContract">CredentialContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="issueCredential"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /credentials/{credentialId}</code></pre></div>
+    <div class="method-summary">Issues the credential. (<span class="nickname">issueCredential</span>)</div>
+    <div class="method-notes">Issues the credential.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">credentialId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The credential identifier. </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#Body">Body</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; If the values offered were incorrect, changes to the values may be made here. You must update all of the values, and they must be follow the same structure of the schema.
+To keep the values the same as those included in the credential offer, leave the body blank </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listCredentials"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /credentials</code></pre></div>
+    <div class="method-summary">Lists the credentials. (<span class="nickname">listCredentials</span>)</div>
+    <div class="method-notes">Lists the credentials.</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">state (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialContractArray">CredentialContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialContractArray">CredentialContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="revokeCredential"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /credentials/{credentialId}</code></pre></div>
+    <div class="method-summary">Revokes a credential. (<span class="nickname">revokeCredential</span>)</div>
+    <div class="method-notes">Revoke credential that was issued previously. Process of revocation will update the revocation
+registry locally and on the ledger. Issued credentials can still participate in proof workflows
+and be considered valid, but only if the verifying ignores the revocation trail.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">credentialId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Credential identifier. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Definitions">Definitions</a></h1>
+  <div class="method"><a name="createCredentialDefinition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /definitions/credentials</code></pre></div>
+    <div class="method-summary">Create new credential definition and schema with the given parameters. (<span class="nickname">createCredentialDefinition</span>)</div>
+    <div class="method-notes">Create new credential definition and schema with the given parameters.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">credentialDefinitionFromSchemaParameters <a href="#CredentialDefinitionFromSchemaParameters">CredentialDefinitionFromSchemaParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Definition. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "maxCredentialCount" : 0,
+  "schemaId" : "schemaId",
+  "name" : "name",
+  "supportsRevocation" : true,
+  "attributes" : [ "attributes", "attributes" ],
+  "version" : "version",
+  "definitionId" : "definitionId"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="createCredentialDefinitionForSchemaId"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /definitions/credentials/{schemaId}</code></pre></div>
+    <div class="method-summary">Create credential definition from existing schema identifier. (<span class="nickname">createCredentialDefinitionForSchemaId</span>)</div>
+    <div class="method-notes">Create credential definition from existing schema identifier.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">schemaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">credentialDefinitionParameters <a href="#CredentialDefinitionParameters">CredentialDefinitionParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "maxCredentialCount" : 0,
+  "schemaId" : "schemaId",
+  "name" : "name",
+  "supportsRevocation" : true,
+  "attributes" : [ "attributes", "attributes" ],
+  "version" : "version",
+  "definitionId" : "definitionId"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="createSchema"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /definitions/schemas</code></pre></div>
+    <div class="method-summary">Create new schema (<span class="nickname">createSchema</span>)</div>
+    <div class="method-notes">Register schema with the current agency tenant and write the schema
+to the ledger using the tenant as issuer. This does not create credential definition.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">schemaParameters <a href="#SchemaParameters">SchemaParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Schema details </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#DefinitionsSchemasPost200TextPlainResponse">DefinitionsSchemasPost200TextPlainResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{ }</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#DefinitionsSchemasPost200TextPlainResponse">DefinitionsSchemasPost200TextPlainResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="createVerificationDefinition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /definitions/verifications</code></pre></div>
+    <div class="method-summary">Creates new verification definition. (<span class="nickname">createVerificationDefinition</span>)</div>
+    <div class="method-notes">Creates new verification definition.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">proofRequest <a href="#ProofRequest">ProofRequest</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The proof request. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationDefinitionContract">VerificationDefinitionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : {
+    "name" : "name",
+    "requested_attributes" : {
+      "key" : {
+        "name" : "name",
+        "restrictions" : [ {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        }, {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        } ],
+        "non_revoked" : {
+          "from" : 0,
+          "to" : 6
+        }
+      }
+    },
+    "non_revoked" : {
+      "from" : 0,
+      "to" : 6
+    },
+    "version" : "version",
+    "nonce" : "nonce",
+    "requested_predicates" : {
+      "key" : {
+        "p_value" : "p_value",
+        "name" : "name",
+        "p_type" : "p_type",
+        "restrictions" : [ {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        }, {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        } ],
+        "non_revoked" : {
+          "from" : 0,
+          "to" : 6
+        }
+      }
+    }
+  },
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationDefinitionContract">VerificationDefinitionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCredentialDefinition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /definitions/credentials/{definitionId}</code></pre></div>
+    <div class="method-summary">Get the credential definition with the specified identifier. (<span class="nickname">getCredentialDefinition</span>)</div>
+    <div class="method-notes">Get the credential definition with the specified identifier.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">definitionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "maxCredentialCount" : 0,
+  "schemaId" : "schemaId",
+  "name" : "name",
+  "supportsRevocation" : true,
+  "attributes" : [ "attributes", "attributes" ],
+  "version" : "version",
+  "definitionId" : "definitionId"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialDefinitionContract">CredentialDefinitionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getVerificationDefinition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /definitions/verifications/{definitionId}</code></pre></div>
+    <div class="method-summary">Gets the specified verification definition. (<span class="nickname">getVerificationDefinition</span>)</div>
+    <div class="method-notes">Gets the specified verification definition.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">definitionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The verification identifier. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationDefinitionContract">VerificationDefinitionContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : {
+    "name" : "name",
+    "requested_attributes" : {
+      "key" : {
+        "name" : "name",
+        "restrictions" : [ {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        }, {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        } ],
+        "non_revoked" : {
+          "from" : 0,
+          "to" : 6
+        }
+      }
+    },
+    "non_revoked" : {
+      "from" : 0,
+      "to" : 6
+    },
+    "version" : "version",
+    "nonce" : "nonce",
+    "requested_predicates" : {
+      "key" : {
+        "p_value" : "p_value",
+        "name" : "name",
+        "p_type" : "p_type",
+        "restrictions" : [ {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        }, {
+          "schema_version" : "schema_version",
+          "issuer_did" : "issuer_did",
+          "schema_id" : "schema_id",
+          "cred_def_id" : "cred_def_id",
+          "schema_issuer_did" : "schema_issuer_did",
+          "schema_name" : "schema_name"
+        } ],
+        "non_revoked" : {
+          "from" : 0,
+          "to" : 6
+        }
+      }
+    }
+  },
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationDefinitionContract">VerificationDefinitionContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listCredentialDefinitions"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /definitions/credentials</code></pre></div>
+    <div class="method-summary">List all credential definitions by this issuer. (<span class="nickname">listCredentialDefinitions</span>)</div>
+    <div class="method-notes">List all credential definitions by this issuer.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CredentialDefinitionContractArray">CredentialDefinitionContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#CredentialDefinitionContractArray">CredentialDefinitionContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listSchemas"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /definitions/schemas</code></pre></div>
+    <div class="method-summary">List the schemas registered or used by this issuer. (<span class="nickname">listSchemas</span>)</div>
+    <div class="method-notes">List the schemas registered or used by this issuer.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SchemaRecordArray">SchemaRecordArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#SchemaRecordArray">SchemaRecordArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listVerificationDefinitions"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /definitions/verifications</code></pre></div>
+    <div class="method-summary">List all verification definitions. (<span class="nickname">listVerificationDefinitions</span>)</div>
+    <div class="method-notes">List all verification definitions.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationDefinitionContractArray">VerificationDefinitionContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationDefinitionContractArray">VerificationDefinitionContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Messaging">Messaging</a></h1>
+  <div class="method"><a name="getMessage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /messages/{messageId}</code></pre></div>
+    <div class="method-summary">GetMessage (<span class="nickname">getMessage</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">messageId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#BasicMessageContract">BasicMessageContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "connectionId" : "connectionId",
+  "text" : "text",
+  "timestamp" : "2000-01-23T04:56:07.000+00:00",
+  "direction" : { }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#BasicMessageContract">BasicMessageContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listMessages"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /messages/connection/{connectionId}</code></pre></div>
+    <div class="method-summary">ListMessages (<span class="nickname">listMessages</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#BasicMessageRecordArray">BasicMessageRecordArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#BasicMessageRecordArray">BasicMessageRecordArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="sendMessage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /messages</code></pre></div>
+    <div class="method-summary">SendMessage (<span class="nickname">sendMessage</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">basicMessageParameters <a href="#BasicMessageParameters">BasicMessageParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Tenants">Tenants</a></h1>
+  <div class="method"><a name="createTenant"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /tenants</code></pre></div>
+    <div class="method-summary">Create new tenant (<span class="nickname">createTenant</span>)</div>
+    <div class="method-notes">Create new tenant and setup a unique agency endpoint. The agency will be set as an issuer</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">tenantParameters <a href="#TenantParameters">TenantParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Configuration options for creating new tenant. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TenantContract">TenantContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "extendedInformation" : {
+    "agentKeyGenerationSeed" : "agentKeyGenerationSeed",
+    "issuerDid" : "issuerDid",
+    "issuerKey" : "issuerKey",
+    "issuerKeyGenerationSeed" : "issuerKeyGenerationSeed",
+    "agentDid" : "agentDid",
+    "agentKey" : "agentKey",
+    "transactionEndorsement" : { },
+    "agentServiceEndpoint" : "agentServiceEndpoint"
+  },
+  "imageUrl" : "imageUrl",
+  "name" : "name",
+  "tenantId" : "tenantId",
+  "network" : {
+    "network_id" : "network_id",
+    "network_name" : "network_name",
+    "pool_protocol_version" : 0
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#TenantContract">TenantContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteTenant"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /tenants/{tenantId}</code></pre></div>
+    <div class="method-summary">Delete a tenant. (<span class="nickname">deleteTenant</span>)</div>
+    <div class="method-notes">Permanently remove a tenant, including their wallet, endpoint registrations and all data.
+All definitions, connections and credentials issued will be deleted.
+This action cannot be reverted.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">tenantId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getIssuerStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tenants/issuerStatus</code></pre></div>
+    <div class="method-summary">Get the issuer status for the current tenant. (<span class="nickname">getIssuerStatus</span>)</div>
+    <div class="method-notes">If the tenant is configured with Dedicated endorsement, this
+action will check if the issuer DID has the required ENDORSER role
+on the configured ledger network.
+Additionally, check the acceptance of the transaction
+author agreement and return the text and version if acceptance
+is required.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#IssuerStatusContract">IssuerStatusContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "txnEndorsement" : { },
+  "acceptanceVersion" : "acceptanceVersion",
+  "acceptanceText" : "acceptanceText",
+  "acceptanceTime" : 0,
+  "requireAcceptance" : true,
+  "acceptanceDigest" : "acceptanceDigest",
+  "issuerCanEndorse" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#IssuerStatusContract">IssuerStatusContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTenant"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tenants/{tenantId}</code></pre></div>
+    <div class="method-summary">Returns the agent configuration (<span class="nickname">getTenant</span>)</div>
+    <div class="method-notes">Returns the agent configuration</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">tenantId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TenantContract">TenantContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "extendedInformation" : {
+    "agentKeyGenerationSeed" : "agentKeyGenerationSeed",
+    "issuerDid" : "issuerDid",
+    "issuerKey" : "issuerKey",
+    "issuerKeyGenerationSeed" : "issuerKeyGenerationSeed",
+    "agentDid" : "agentDid",
+    "agentKey" : "agentKey",
+    "transactionEndorsement" : { },
+    "agentServiceEndpoint" : "agentServiceEndpoint"
+  },
+  "imageUrl" : "imageUrl",
+  "name" : "name",
+  "tenantId" : "tenantId",
+  "network" : {
+    "network_id" : "network_id",
+    "network_name" : "network_name",
+    "pool_protocol_version" : 0
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#TenantContract">TenantContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listTenants"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tenants</code></pre></div>
+    <div class="method-summary">List available tenants (<span class="nickname">listTenants</span>)</div>
+    <div class="method-notes">Get a collection of available tenants for the current authorization context.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TenantContractArray">TenantContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#TenantContractArray">TenantContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Verifications">Verifications</a></h1>
+  <div class="method"><a name="createVerification"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /verifications</code></pre></div>
+    <div class="method-summary">Creates the specified create verification. (<span class="nickname">createVerification</span>)</div>
+    <div class="method-notes">Creates the specified create verification.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">verificationParameters <a href="#VerificationParameters">VerificationParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The create verification. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#IdContract">IdContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#IdContract">IdContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getVerification"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /verifications/{verificationId}</code></pre></div>
+    <div class="method-summary">Get the verification with the given identifier (<span class="nickname">getVerification</span>)</div>
+    <div class="method-notes">Get the verification with the given identifier</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">verificationId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The verification identifier. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationContract">VerificationContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "createdAtUtc" : "2000-01-23T04:56:07.000+00:00",
+  "isValid" : true,
+  "connectionId" : "connectionId",
+  "state" : { },
+  "proof" : {
+    "key" : {
+      "conditional" : true,
+      "name" : "name",
+      "revealed" : true,
+      "value" : "value",
+      "selfAttested" : true
+    }
+  },
+  "verifiedAtUtc" : "2000-01-23T04:56:07.000+00:00",
+  "verificationId" : "verificationId",
+  "updatedAtUtc" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationContract">VerificationContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listVerificationsForConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /verifications</code></pre></div>
+    <div class="method-summary">Lists the verifications for connection. (<span class="nickname">listVerificationsForConnection</span>)</div>
+    <div class="method-notes">Lists the verifications for connection.</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The connection identifier. </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationContractArray">VerificationContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationContractArray">VerificationContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="verifyVerification"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /verifications/{verificationId}/verify</code></pre></div>
+    <div class="method-summary">Execute verification on this record. This is an expensive action and is executed
+by veryfing the proof againt the ledger data. (<span class="nickname">verifyVerification</span>)</div>
+    <div class="method-notes">Execute verification on this record. This is an expensive action and is executed
+by veryfing the proof againt the ledger data.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">verificationId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Verification identifier </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VerificationResult">VerificationResult</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "valid" : true,
+  "proof" : {
+    "key" : {
+      "conditional" : true,
+      "name" : "name",
+      "revealed" : true,
+      "value" : "value",
+      "selfAttested" : true
+    }
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#VerificationResult">VerificationResult</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Webhooks">Webhooks</a></h1>
+  <div class="method"><a name="createWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /webhooks</code></pre></div>
+    <div class="method-summary">Create new webhook (<span class="nickname">createWebhook</span>)</div>
+    <div class="method-notes">Create new webhook</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json-patch+json</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+      <li><code>application/*+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">webhookParameters <a href="#WebhookParameters">WebhookParameters</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebhookContract">WebhookContract</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "id",
+  "type" : { },
+  "url" : "url",
+  "enabled" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#WebhookContract">WebhookContract</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="disableWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /webhooks/{webhookId}/disable</code></pre></div>
+    <div class="method-summary">Disables a webhook (<span class="nickname">disableWebhook</span>)</div>
+    <div class="method-notes">Disables a webhook</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">webhookId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="enableWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /webhooks/{webhookId}/enable</code></pre></div>
+    <div class="method-summary">Enables a webhook (<span class="nickname">enableWebhook</span>)</div>
+    <div class="method-notes">Enables a webhook</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">webhookId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listWebhooks"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /webhooks</code></pre></div>
+    <div class="method-summary">List all webhooks (<span class="nickname">listWebhooks</span>)</div>
+    <div class="method-notes">List all webhooks</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebhookContractArray">WebhookContractArray</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#WebhookContractArray">WebhookContractArray</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="removeWebhook"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /webhooks/{webhookId}</code></pre></div>
+    <div class="method-summary">Remove registered webhook (<span class="nickname">removeWebhook</span>)</div>
+    <div class="method-notes">Remove registered webhook</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">webhookId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#AgentEndpoint"><code>AgentEndpoint</code> - </a></li>
+    <li><a href="#AttributeFilter"><code>AttributeFilter</code> - </a></li>
+    <li><a href="#BasicMessageContract"><code>BasicMessageContract</code> - </a></li>
+    <li><a href="#BasicMessageParameters"><code>BasicMessageParameters</code> - </a></li>
+    <li><a href="#BasicMessageRecord"><code>BasicMessageRecord</code> - </a></li>
+    <li><a href="#BasicMessageRecordArray"><code>BasicMessageRecordArray</code> - </a></li>
+    <li><a href="#Body"><code>Body</code> - </a></li>
+    <li><a href="#CommonUploadPost200ApplicationJsonResponse"><code>CommonUploadPost200ApplicationJsonResponse</code> - </a></li>
+    <li><a href="#ConnectionContract"><code>ConnectionContract</code> - </a></li>
+    <li><a href="#ConnectionContractArray"><code>ConnectionContractArray</code> - </a></li>
+    <li><a href="#ConnectionInvitationParameters"><code>ConnectionInvitationParameters</code> - </a></li>
+    <li><a href="#ConnectionState"><code>ConnectionState</code> - </a></li>
+    <li><a href="#CredentialContract"><code>CredentialContract</code> - </a></li>
+    <li><a href="#CredentialContractArray"><code>CredentialContractArray</code> - </a></li>
+    <li><a href="#CredentialDefinitionContract"><code>CredentialDefinitionContract</code> - </a></li>
+    <li><a href="#CredentialDefinitionContractArray"><code>CredentialDefinitionContractArray</code> - </a></li>
+    <li><a href="#CredentialDefinitionFromSchemaParameters"><code>CredentialDefinitionFromSchemaParameters</code> - </a></li>
+    <li><a href="#CredentialDefinitionParameters"><code>CredentialDefinitionParameters</code> - </a></li>
+    <li><a href="#CredentialOfferParameters"><code>CredentialOfferParameters</code> - </a></li>
+    <li><a href="#CredentialState"><code>CredentialState</code> - </a></li>
+    <li><a href="#DefinitionsSchemasPost200ApplicationJsonResponse"><code>DefinitionsSchemasPost200ApplicationJsonResponse</code> - </a></li>
+    <li><a href="#DefinitionsSchemasPost200TextJsonResponse"><code>DefinitionsSchemasPost200TextJsonResponse</code> - </a></li>
+    <li><a href="#DefinitionsSchemasPost200TextPlainResponse"><code>DefinitionsSchemasPost200TextPlainResponse</code> - </a></li>
+    <li><a href="#EndorserType"><code>EndorserType</code> - </a></li>
+    <li><a href="#IdContract"><code>IdContract</code> - </a></li>
+    <li><a href="#IssuerStatusContract"><code>IssuerStatusContract</code> - </a></li>
+    <li><a href="#MessageDirection"><code>MessageDirection</code> - </a></li>
+    <li><a href="#NetworkContract"><code>NetworkContract</code> - </a></li>
+    <li><a href="#NetworkContractArray"><code>NetworkContractArray</code> - </a></li>
+    <li><a href="#NetworkTxnAgreementContract"><code>NetworkTxnAgreementContract</code> - </a></li>
+    <li><a href="#ProofAttributeContract"><code>ProofAttributeContract</code> - </a></li>
+    <li><a href="#ProofAttributeInfo"><code>ProofAttributeInfo</code> - </a></li>
+    <li><a href="#ProofPredicateInfo"><code>ProofPredicateInfo</code> - </a></li>
+    <li><a href="#ProofRequest"><code>ProofRequest</code> - </a></li>
+    <li><a href="#ProofState"><code>ProofState</code> - </a></li>
+    <li><a href="#RevocationInterval"><code>RevocationInterval</code> - </a></li>
+    <li><a href="#SchemaParameters"><code>SchemaParameters</code> - </a></li>
+    <li><a href="#SchemaRecord"><code>SchemaRecord</code> - </a></li>
+    <li><a href="#SchemaRecordArray"><code>SchemaRecordArray</code> - </a></li>
+    <li><a href="#TenantContract"><code>TenantContract</code> - </a></li>
+    <li><a href="#TenantContractArray"><code>TenantContractArray</code> - </a></li>
+    <li><a href="#TenantExtendedInformationContract"><code>TenantExtendedInformationContract</code> - </a></li>
+    <li><a href="#TenantParameters"><code>TenantParameters</code> - </a></li>
+    <li><a href="#VerificationContract"><code>VerificationContract</code> - </a></li>
+    <li><a href="#VerificationContractArray"><code>VerificationContractArray</code> - </a></li>
+    <li><a href="#VerificationDefinitionContract"><code>VerificationDefinitionContract</code> - </a></li>
+    <li><a href="#VerificationDefinitionContractArray"><code>VerificationDefinitionContractArray</code> - </a></li>
+    <li><a href="#VerificationParameters"><code>VerificationParameters</code> - </a></li>
+    <li><a href="#VerificationResult"><code>VerificationResult</code> - </a></li>
+    <li><a href="#WebhookContract"><code>WebhookContract</code> - </a></li>
+    <li><a href="#WebhookContractArray"><code>WebhookContractArray</code> - </a></li>
+    <li><a href="#WebhookParameters"><code>WebhookParameters</code> - </a></li>
+    <li><a href="#WebhookType"><code>WebhookType</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="AgentEndpoint"><code>AgentEndpoint</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">did (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">verkey (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">uri (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AttributeFilter"><code>AttributeFilter</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">schema_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">schema_issuer_did (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">schema_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">schema_version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">issuer_did (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cred_def_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BasicMessageContract"><code>BasicMessageContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">timestamp (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">direction (optional)</div><div class="param-desc"><span class="param-type"><a href="#MessageDirection">MessageDirection</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BasicMessageParameters"><code>BasicMessageParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BasicMessageRecord"><code>BasicMessageRecord</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sentTime (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">direction (optional)</div><div class="param-desc"><span class="param-type"><a href="#MessageDirection">MessageDirection</a></span>  </div>
+<div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BasicMessageRecordArray"><code>BasicMessageRecordArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Body"><code>Body</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CommonUploadPost200ApplicationJsonResponse"><code>CommonUploadPost200ApplicationJsonResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ConnectionContract"><code>ConnectionContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">imageUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">myDid (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">theirDid (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">myKey (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">theirKey (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">state (optional)</div><div class="param-desc"><span class="param-type"><a href="#ConnectionState">ConnectionState</a></span>  </div>
+<div class="param">invitation (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">invitationUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">endpoint (optional)</div><div class="param-desc"><span class="param-type"><a href="#AgentEndpoint">AgentEndpoint</a></span>  </div>
+<div class="param">createdAtUtc (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ConnectionContractArray"><code>ConnectionContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ConnectionInvitationParameters"><code>ConnectionInvitationParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Connection invitation parameters</div>
+    <div class="field-items">
+      <div class="param">connection_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique connection identifier. If not specified, a random one will be generated. </div>
+<div class="param">multi_party (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> <p>If set to 'true', the invitation can be used by multiple parties and will always have the status set to 'Invited'.
+When a party accepts this invitation, a new connection record with a unique identifier will be created.</p>
+<p>Default value is 'false'.</p>
+ </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ConnectionState"><code>ConnectionState</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialContract"><code>CredentialContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">credentialId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">state (optional)</div><div class="param-desc"><span class="param-type"><a href="#CredentialState">CredentialState</a></span>  </div>
+<div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">definitionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">schemaId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">values (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">map[String, String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialContractArray"><code>CredentialContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialDefinitionContract"><code>CredentialDefinitionContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">attributes (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">supportsRevocation (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">maxCredentialCount (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">schemaId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">definitionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialDefinitionContractArray"><code>CredentialDefinitionContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialDefinitionFromSchemaParameters"><code>CredentialDefinitionFromSchemaParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Represents a request object to create new credential definition for an agency</div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the schema. </div>
+<div class="param">version </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Schema version. </div>
+<div class="param">attrNames </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Schema attribute names. </div>
+<div class="param">supportRevocation (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Support credential revocation </div>
+<div class="param">tag (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique tag to differentiate definitions of the same schema </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialDefinitionParameters"><code>CredentialDefinitionParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Credential definition parameters</div>
+    <div class="field-items">
+      <div class="param">supportRevocation (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Support credential revocation </div>
+<div class="param">tag (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique tag to differentiate definitions of the same schema </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialOfferParameters"><code>CredentialOfferParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Send offer.</div>
+    <div class="field-items">
+      <div class="param">definitionId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the credential definition identifier. </div>
+<div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Connection identifier to send this credential to.
+If ommited, the request will be treated as connectionless
+issuance and will generate a URL. </div>
+<div class="param">automaticIssuance (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> If true, the credential will automatically be issued once the individual accepts the offer. If
+false, when an individual accepts the offer the credential will be in state 'Requested' and must be manually issued using the
+PUT /credentials/{credentialId} endpoint. This is set to false by default </div>
+<div class="param">credentialValues (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">map[String, String]</a></span> Credential attribute values. If using connectionless issuance, these attributes must be specified.
+Must match all credential definition attribute names. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CredentialState"><code>CredentialState</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DefinitionsSchemasPost200ApplicationJsonResponse"><code>DefinitionsSchemasPost200ApplicationJsonResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DefinitionsSchemasPost200TextJsonResponse"><code>DefinitionsSchemasPost200TextJsonResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DefinitionsSchemasPost200TextPlainResponse"><code>DefinitionsSchemasPost200TextPlainResponse</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="EndorserType"><code>EndorserType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="IdContract"><code>IdContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="IssuerStatusContract"><code>IssuerStatusContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Issuer Status contract</div>
+    <div class="field-items">
+      <div class="param">acceptanceText (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Transaction Author Agreement Text </div>
+<div class="param">acceptanceVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Transaction Author Agreement Version </div>
+<div class="param">acceptanceDigest (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">acceptanceTime (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">requireAcceptance (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Indicates if user needs to accept the
+latest agreement on the network </div>
+<div class="param">txnEndorsement (optional)</div><div class="param-desc"><span class="param-type"><a href="#EndorserType">EndorserType</a></span>  </div>
+<div class="param">issuerCanEndorse (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Indicates if the user has Endorser status </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MessageDirection"><code>MessageDirection</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NetworkContract"><code>NetworkContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">network_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">network_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">pool_protocol_version (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NetworkContractArray"><code>NetworkContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NetworkTxnAgreementContract"><code>NetworkTxnAgreementContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Transaction author agreement</div>
+    <div class="field-items">
+      <div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Acceptance agreement text </div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Agreement version </div>
+<div class="param">acceptanceMethods (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">map[String, String]</a></span> List of agreement acceptance methods </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProofAttributeContract"><code>ProofAttributeContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">revealed (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">selfAttested (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">conditional (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProofAttributeInfo"><code>ProofAttributeInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">restrictions (optional)</div><div class="param-desc"><span class="param-type"><a href="#AttributeFilter">array[AttributeFilter]</a></span>  </div>
+<div class="param">non_revoked (optional)</div><div class="param-desc"><span class="param-type"><a href="#RevocationInterval">RevocationInterval</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProofPredicateInfo"><code>ProofPredicateInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">p_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">p_value (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">restrictions (optional)</div><div class="param-desc"><span class="param-type"><a href="#AttributeFilter">array[AttributeFilter]</a></span>  </div>
+<div class="param">non_revoked (optional)</div><div class="param-desc"><span class="param-type"><a href="#RevocationInterval">RevocationInterval</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProofRequest"><code>ProofRequest</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">nonce (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">requested_attributes (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofAttributeInfo">map[String, ProofAttributeInfo]</a></span>  </div>
+<div class="param">requested_predicates (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofPredicateInfo">map[String, ProofPredicateInfo]</a></span>  </div>
+<div class="param">non_revoked (optional)</div><div class="param-desc"><span class="param-type"><a href="#RevocationInterval">RevocationInterval</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProofState"><code>ProofState</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="RevocationInterval"><code>RevocationInterval</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">from (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">to (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SchemaParameters"><code>SchemaParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Schema.</div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the name. </div>
+<div class="param">version </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the version. </div>
+<div class="param">attrNames </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Gets or sets the attribute names. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SchemaRecord"><code>SchemaRecord</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">attributeNames (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SchemaRecordArray"><code>SchemaRecordArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TenantContract"><code>TenantContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Tenant info.</div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the name. </div>
+<div class="param">imageUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the image URI. </div>
+<div class="param">network (optional)</div><div class="param-desc"><span class="param-type"><a href="#NetworkContract">NetworkContract</a></span>  </div>
+<div class="param">tenantId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the tenant identifier. </div>
+<div class="param">extendedInformation (optional)</div><div class="param-desc"><span class="param-type"><a href="#TenantExtendedInformationContract">TenantExtendedInformationContract</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TenantContractArray"><code>TenantContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TenantExtendedInformationContract"><code>TenantExtendedInformationContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Extended tenant information</div>
+    <div class="field-items">
+      <div class="param">issuerDid (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Issuer DID </div>
+<div class="param">issuerKey (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Issuer Public Key </div>
+<div class="param">issuerKeyGenerationSeed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Isuser key generation seed used for deterministic key creation (32 characters) </div>
+<div class="param">agentDid (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Agent DID </div>
+<div class="param">agentKey (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Agent Public Key </div>
+<div class="param">agentKeyGenerationSeed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Agent key generation seed used for deterministic key creation (32 characters) </div>
+<div class="param">agentServiceEndpoint (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Agent service endpoint URL </div>
+<div class="param">transactionEndorsement (optional)</div><div class="param-desc"><span class="param-type"><a href="#EndorserType">EndorserType</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TenantParameters"><code>TenantParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Configuration options for creating new tenant</div>
+    <div class="field-items">
+      <div class="param">issuer_seed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> (Optional) Issuer seed used for deterministic DID generation.
+If omitted, a random DID/Key is generated </div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the tenant. </div>
+<div class="param">image_url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> (Optional) Location of image URL used as profile for this tenant </div>
+<div class="param">network_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> (Optional) Ledger network identifier. Default is Sovrin Staging (sovrin-staging) </div>
+<div class="param">endorser_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#EndorserType">EndorserType</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationContract"><code>VerificationContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">verificationId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">state (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofState">ProofState</a></span>  </div>
+<div class="param">createdAtUtc (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">updatedAtUtc (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">isValid (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">verifiedAtUtc (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">proof (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofAttributeContract">map[String, ProofAttributeContract]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationContractArray"><code>VerificationContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationDefinitionContract"><code>VerificationDefinitionContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the identifier. </div>
+<div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofRequest">ProofRequest</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationDefinitionContractArray"><code>VerificationDefinitionContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationParameters"><code>VerificationParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Create verification</div>
+    <div class="field-items">
+      <div class="param">verificationDefinitionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Verification definition identifier. </div>
+<div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Connection identifier. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VerificationResult"><code>VerificationResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Verification result</div>
+    <div class="field-items">
+      <div class="param">valid (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> True if verification passed, otherwise False </div>
+<div class="param">proof (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProofAttributeContract">map[String, ProofAttributeContract]</a></span> Verification Proof Details </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookContract"><code>WebhookContract</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Webhook Contract.</div>
+    <div class="field-items">
+      <div class="param">url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Gets or sets the webhook endpoing url </div>
+<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#WebhookType">WebhookType</a></span>  </div>
+<div class="param">enabled (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Gets or set if this webhook is enabled </div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The webhook identifier </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookContractArray"><code>WebhookContractArray</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookParameters"><code>WebhookParameters</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#WebhookType">WebhookType</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebhookType"><code>WebhookType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

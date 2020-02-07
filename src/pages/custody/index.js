@@ -1,17 +1,18 @@
 import React from 'react';
 import { RedocStandalone } from 'redoc';
+import Layout from '@theme/Layout'; 
 
-function Redoc(props){
+function Custody(props){
 	return (
-    
-  <RedocStandalone
-  specUrl="./custody.json"
-  options={{
-    nativeScrollbars: true,
-    theme: { colors: { primary: { main: '#7300D3' } } },
-  }}
-/>
+  <Layout>
+		<RedocStandalone
+		specUrl="./custody.json"
+		options={{
+			nativeScrollbars: true,
+			theme: { colors: { primary: { main: '#8313E4' } } },
+		}}
+/></Layout>
 )
 }
 
-export default Redoc;
+export default Custody;

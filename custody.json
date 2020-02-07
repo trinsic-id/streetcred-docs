@@ -1,0 +1,936 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Custodian",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://api.streetcred.id/custodian/v1"
+        }
+    ],
+    "paths": {
+        "/api/{walletId}/connections/invitation": {
+            "post": {
+                "tags": [
+                    "Connection"
+                ],
+                "summary": "Accepts the invitation.",
+                "description": "Accepts the invitation.",
+                "operationId": "AcceptInvitation",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "invitation"
+                                ],
+                                "properties": {
+                                    "invitation": {
+                                        "type": "string",
+                                        "description": "The invitation."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/connections/{connectionId}": {
+            "get": {
+                "tags": [
+                    "Connection"
+                ],
+                "summary": "Creates the connections.",
+                "description": "Creates the connections.",
+                "operationId": "GetConnection",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "connectionId",
+                        "in": "path",
+                        "description": "The connection identifier.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContract"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/connections": {
+            "get": {
+                "tags": [
+                    "Connection"
+                ],
+                "summary": "Gets the connections.",
+                "description": "Retrieves a list of connections that are in 'Connected' state.",
+                "operationId": "GetConnections",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/connections/invitations": {
+            "get": {
+                "tags": [
+                    "Connection"
+                ],
+                "summary": "Gets the invitations.",
+                "description": "Gets the invitations.",
+                "operationId": "GetInvitations",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConnectionContractArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/credentials/connection/{connectionId}": {
+            "get": {
+                "tags": [
+                    "Credentials"
+                ],
+                "summary": "Lists the credentials for connection identifier.",
+                "description": "Lists the credentials for connection identifier.",
+                "operationId": "ListCredentialsForConnectionId",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "connectionId",
+                        "in": "path",
+                        "description": "The connection identifier.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/credentials": {
+            "get": {
+                "tags": [
+                    "Credentials"
+                ],
+                "summary": "Lists the credentials.",
+                "description": "Lists the credentials.",
+                "operationId": "ListCredentials",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CredentialContractArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/credentials/{credentialId}": {
+            "post": {
+                "tags": [
+                    "Credentials"
+                ],
+                "summary": "Accepts the credential offer.",
+                "description": "Accepts the credential offer.",
+                "operationId": "AcceptCredentialOffer",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "credentialId",
+                        "in": "path",
+                        "description": "The credential identifier.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "Discovery"
+                ],
+                "summary": "GetSuccess",
+                "operationId": "GetSuccess",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/config": {
+            "get": {
+                "tags": [
+                    "Discovery"
+                ],
+                "summary": "GetConfiguration",
+                "operationId": "GetConfiguration",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProvisioningInfo"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProvisioningInfo"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProvisioningInfo"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{walletId}/presentations/connection/{connectionId}": {
+            "get": {
+                "tags": [
+                    "Presentation"
+                ],
+                "summary": "Lists the verifications for connection.",
+                "description": "Lists the verifications for connection.",
+                "operationId": "ListVerificationsForConnection",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "connectionId",
+                        "in": "path",
+                        "description": "The connection identifier.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationContractArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationContractArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationContractArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallets": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Lists the wallets async.",
+                "description": "Lists the wallets async.",
+                "operationId": "ListWallets",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletInfoArray"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletInfoArray"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletInfoArray"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Create new wallet",
+                "description": "Create new wallet",
+                "operationId": "CreateWallet",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WalletParameters"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WalletParameters"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WalletParameters"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WalletParameters"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletContract"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletContract"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WalletContract"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "text/plain": {},
+                            "application/json": {},
+                            "text/json": {}
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Deletes the wallet async.",
+                "description": "Deletes the wallet async.",
+                "operationId": "DeleteWallet",
+                "parameters": [
+                    {
+                        "name": "walletId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ConnectionContract": {
+                "type": "object",
+                "properties": {
+                    "connectionId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "myDid": {
+                        "type": "string"
+                    },
+                    "theirDid": {
+                        "type": "string"
+                    },
+                    "myKey": {
+                        "type": "string"
+                    },
+                    "theirKey": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "enum": [
+                            "Invited",
+                            "Negotiating",
+                            "Connected"
+                        ],
+                        "type": "string"
+                    },
+                    "invitation": {
+                        "type": "string"
+                    },
+                    "invitationUrl": {
+                        "type": "string"
+                    },
+                    "endpoint": {
+                        "$ref": "#/components/schemas/AgentEndpoint"
+                    },
+                    "createdAtUtc": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "AgentEndpoint": {
+                "type": "object",
+                "properties": {
+                    "did": {
+                        "type": "string"
+                    },
+                    "verkey": {
+                        "type": "string"
+                    },
+                    "uri": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CredentialContract": {
+                "type": "object",
+                "properties": {
+                    "credentialId": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "enum": [
+                            "Offered",
+                            "Requested",
+                            "Issued",
+                            "Rejected",
+                            "Revoked"
+                        ],
+                        "type": "string"
+                    },
+                    "connectionId": {
+                        "type": "string"
+                    },
+                    "definitionId": {
+                        "type": "string"
+                    },
+                    "schemaId": {
+                        "type": "string"
+                    },
+                    "values": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ProvisioningInfo": {
+                "type": "object",
+                "properties": {
+                    "issuerDid": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "endpoint": {
+                        "$ref": "#/components/schemas/AgentEndpoint"
+                    }
+                }
+            },
+            "VerificationContract": {
+                "type": "object",
+                "properties": {
+                    "connectionId": {
+                        "type": "string"
+                    },
+                    "verificationId": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "enum": [
+                            "Requested",
+                            "Accepted",
+                            "Rejected"
+                        ],
+                        "type": "string"
+                    },
+                    "createdAtUtc": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAtUtc": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "isValid": {
+                        "type": "boolean"
+                    },
+                    "verifiedAtUtc": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "WalletInfo": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Gets or sets the type."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Gets or sets the identifier."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Gets or sets the name."
+                    }
+                },
+                "description": "Wallet information"
+            },
+            "WalletParameters": {
+                "type": "object",
+                "properties": {
+                    "ownerName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "WalletContract": {
+                "type": "object",
+                "properties": {
+                    "walletId": {
+                        "type": "string"
+                    },
+                    "ownerName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ConnectionContractArray": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ConnectionContract"
+                }
+            },
+            "CredentialContractArray": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/CredentialContract"
+                }
+            },
+            "VerificationContractArray": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/VerificationContract"
+                }
+            },
+            "WalletInfoArray": {
+                "uniqueItems": false,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/WalletInfo"
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiKeyHeader": {
+                "type": "apiKey",
+                "name": "X-Streetcred-Subscription-Key",
+                "in": "header"
+            },
+            "apiKeyQuery": {
+                "type": "apiKey",
+                "name": "subscription-key",
+                "in": "query"
+            }
+        }
+    },
+    "security": [
+        {},
+        {
+            "apiKeyHeader": []
+        },
+        {
+            "apiKeyQuery": []
+        }
+    ]
+}
